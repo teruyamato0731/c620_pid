@@ -1,0 +1,14 @@
+{
+  "requires": [
+    "bare-metal"
+  ],
+  "target_overrides": {
+    "*": {
+      "target.c_lib": "std",
+      "platform.minimal-printf-enable-64-bit": true,
+      "platform.minimal-printf-enable-floating-point": true,
+      "platform.minimal-printf-set-floating-point-max-decimals": 6,
+      "platform.stdio-baud-rate": 115200
+    }
+  }
+}
