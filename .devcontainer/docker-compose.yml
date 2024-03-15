@@ -1,16 +1,16 @@
 version: '3'
 services:
-  pio-template:
+  c620_pid:
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
       # Working
-      - ..:/workspaces/pio-template:cached
+      - ..:/workspaces/c620_pid:cached
       # device access
       - /dev:/dev
       - pio-cache:/home/vscode/.platformio
-    working_dir: /workspaces/pio-template
+    working_dir: /workspaces/c620_pid
     tty: true
     command: bash -c "sudo chown -R vscode:vscode /home/vscode/.platformio && sleep inf"
     # device access
