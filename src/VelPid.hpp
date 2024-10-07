@@ -40,8 +40,8 @@ struct VelPid {
     const auto deriv = std::isnan(pre_prop_) ? 0 : (prop - pre_prop_) / sec;
     pre_error_ = error;
     pre_prop_ = prop;
-    row_pass_deriv_ += deriv / 8;
-    const auto du = param_.gain.kp * prop + param_.gain.ki * error + param_.gain.kd * row_pass_deriv_;
+    lpf_deriv_ += (deriv - lpf_deriv_) / 8;
+    const auto du = param_.gain.kp * prop + param_.gain.ki * error + param_.gain.kd * lpf_deriv_;
     output_ = std::clamp(output_ + du, param_.min, param_.max);
     return output_;
   }
@@ -50,7 +50,7 @@ struct VelPid {
   void reset() {
     pre_error_ = 0.0;
     pre_prop_ = NAN;
-    row_pass_deriv_ = 0.0;
+    lpf_deriv_ = 0.0;
     output_ = 0.0;
   }
 
@@ -76,7 +76,7 @@ struct VelPid {
   PidParam param_;
   float pre_error_ = 0.0;
   float pre_prop_ = NAN;
-  float row_pass_deriv_ = 0.0;
+  float lpf_deriv_ = 0.0;
   float output_ = 0.0;
 };
 
